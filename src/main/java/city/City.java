@@ -20,7 +20,7 @@ public class City {
 
     public List<Building> findBuildingsByStreet(String street) {
         List<Building> result = new ArrayList<>();
-        for (Building b: buildings) {
+        for (Building b : buildings) {
             if (b.getAddress().equals(street)) {
                 result.add(b);
             }
@@ -28,16 +28,23 @@ public class City {
         return result;
     }
 
-    public Building findHighestBuildingInCity() {
+    public boolean isThereBuildingWithMorePeopleThan(int numberOfPeople) {
+        for (Building b : buildings) {
+            if (b.calculateNumberOfPeopleCanFit() > numberOfPeople) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Building findHighestBuilding() {
         Building highest = null;
-        for (Building b: buildings)
+        for (Building b : buildings)
             if (b.getLevels() > highest.getLevels()) {
                 highest = b;
             }
         return highest;
     }
-
-
 
     public City(String name, long citySize) {
         this.name = name;
