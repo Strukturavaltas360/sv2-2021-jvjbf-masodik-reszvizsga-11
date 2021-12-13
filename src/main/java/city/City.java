@@ -38,7 +38,7 @@ public class City {
     }
 
     public Building findHighestBuilding() {
-        Building highest = null;
+        Building highest = buildings.get(0);
         for (Building b : buildings)
             if (b.getLevels() > highest.getLevels()) {
                 highest = b;
