@@ -2,6 +2,7 @@ package algorithms;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 
 public class Words {
@@ -38,7 +39,7 @@ public class Words {
 
     public boolean isThereAWordTwice() {
         for (int i = 0; i < words.size() - 1; i++) {
-            for (int j = i + 2; j < words.size(); j++) {
+            for (int j = i + 1 ; j < words.size(); j++) {
                 if (words.get(i).equals(words.get(j))) {
                     return true;
                 }

@@ -32,6 +32,7 @@ public class HumanFileManager {
     }
 
     private boolean isHumanAMale(Human human) {
+
         if (human.getIdentityNumber().charAt(0) == '1' || human.getIdentityNumber().charAt(0) == '3') {
             return true;
         } else {

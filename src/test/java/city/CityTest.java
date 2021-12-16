@@ -48,6 +48,7 @@ class CityTest {
         city.addBuilding(new Home(120, new Address("Rákóczi", 12)));
         city.addBuilding(new Home(300, new Address("Rákóczi", 13)));
 
+
         IllegalArgumentException iae = assertThrows(IllegalArgumentException.class, () -> city.addBuilding(new Home(81, new Address("Rákóczi", 14))));
 
         assertEquals("City can't be larger than 500", iae.getMessage());
