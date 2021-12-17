@@ -14,7 +14,7 @@ public class UserFileManager {
     public void readUsersFromFile(Path path) {
         try {
             lines = Files.readAllLines(path);
-            createUsers();
+            createUsersFromList();
         } catch (IOException ioe) {
             throw new IllegalStateException("Can't read file!", ioe);
         }
@@ -32,7 +32,7 @@ public class UserFileManager {
         return new ArrayList<>(users);
     }
 
-    private void createUsers() {
+    private void createUsersFromList() {
         for (String s : lines) {
             String[] temp = s.split(" ");
             users.add(new User(temp[0], Integer.parseInt(temp[1]), temp[2]));
