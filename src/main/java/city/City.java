@@ -1,6 +1,7 @@
 package city;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -22,45 +23,62 @@ public class City {
         this.citySize = citySize;
 
     }
-    
+
     public void addBuilding(Building b) {
         if (sizeOfBuildings + b.getArea() <= citySize) {
             sizeOfBuildings += b.getArea();
             buildings.add(b);
         } else {
-            throw new IllegalArgumentException("City can't be larger than "+citySize);
+            throw new IllegalArgumentException("City can't be larger than " + citySize);
         }
     }
 
+//    public List<Building> findBuildingsByStreet(String street) {
+//        List<Building> result = new ArrayList<>();
+//        for (Building b : buildings) {
+//            if (b.getAddress().getStreet().equals(street)) {
+
+//                result.add(b);
+//            }
+//        }
+//        return result;
+//    }
+
     public List<Building> findBuildingsByStreet(String street) {
-        List<Building> result = new ArrayList<>();
-        for (Building b : buildings) {
-            if (b.getAddress().getStreet().equals(street)) {
-                result.add(b);
-            }
-        }
-        return result;
+        return buildings.stream()
+                .filter(building -> building.getAddress().getStreet().equals(street))
+                .toList();
     }
 
     public boolean isThereBuildingWithMorePeopleThan(int numberOfPeople) {
-        for (Building b : buildings) {
-            if (b.calculateNumberOfPeopleCanFit() > numberOfPeople) {
-                return true;
-            }
-        }
-        return false;
+        return buildings.stream()
+                .anyMatch(b -> b.calculateNumberOfPeopleCanFit() > numberOfPeople);
     }
+
+
+//    public boolean isThereBuildingWithMorePeopleThan(int numberOfPeople) {
+//        for (Building b : buildings) {
+//            if (b.calculateNumberOfPeopleCanFit() > numberOfPeople) {
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
+
+//    public Building findHighestBuilding() {
+//        Building highest = buildings.get(0);
+//        for (Building b : buildings)
+//            if (b.getLevels() > highest.getLevels()) {
+//                highest = b;
+//            }
+//        return highest;
+//    }
 
     public Building findHighestBuilding() {
-        Building highest = buildings.get(0);
-        for (Building b : buildings)
-            if (b.getLevels() > highest.getLevels()) {
-                highest = b;
-            }
-        return highest;
+        return buildings.stream()
+                .max(Comparator.comparingInt(Building::getLevels))
+                .orElseThrow(() -> new IllegalArgumentException("Empty list"));
     }
-
-
 
     public int getSizeOfBuildings() {
         return sizeOfBuildings;
