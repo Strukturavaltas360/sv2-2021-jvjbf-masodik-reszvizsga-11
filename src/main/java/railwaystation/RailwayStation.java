@@ -1,6 +1,7 @@
 package railwaystation;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class RailwayStation {
@@ -16,33 +17,50 @@ public class RailwayStation {
         }
     }
 
+//    public Train getLongestTrain() {
+//        Train longestTrain = trains.get(0);
+//        for (Train train : trains) {
+//            if (train.getTotalLength() > longestTrain.getTotalLength()) {
+//                longestTrain = train;
+//            }
+//        }
+//        return longestTrain;
+//    }
+
     public Train getLongestTrain() {
-        Train longestTrain = trains.get(0);
-        for (Train train : trains) {
-            if (train.getTotalLength() > longestTrain.getTotalLength()) {
-                longestTrain = train;
-            }
-        }
-        return longestTrain;
+        return trains.stream()
+                .max(Comparator.comparing(Train::getTotalLength)).orElseThrow(() -> new IllegalArgumentException("Empty stream"));
     }
 
-    public int getHowManyTrainsHaveName() {
-        int counter = 0;
-        for (Train actual : trains) {
-            if (actual.getName() != null) {
-                counter++;
-            }
-        }
-        return counter;
+    //    public int getHowManyTrainsHaveName() {
+//        int counter = 0;
+//        for (Train actual : trains) {
+//            if (actual.getName() != null) {
+//                counter++;
+//            }
+//        }
+//        return counter;
+//    }
+    public long getHowManyTrainsHaveName() {
+        return trains.stream()
+                .filter(train -> train.getName() != null)
+                .count();
     }
+
+
+//    public List<Train> getTrainsWithPassengersMoreThan(int number) {
+//        List<Train> result = new ArrayList<>();
+//        for (Train actual : trains) {
+//            if (actual.calculateTravellingPeople() > number)
+//                result.add(actual);
+//        }
+//        return result;
+//    }
 
     public List<Train> getTrainsWithPassengersMoreThan(int number) {
-        List<Train> result = new ArrayList<>();
-        for (Train actual : trains) {
-            if (actual.calculateTravellingPeople() > number)
-                result.add(actual);
-        }
-        return result;
+        return trains.stream()
+                .filter(train -> train.calculateTravellingPeople()>number)
+                .toList();
     }
 
     public List<Train> getTrains() {
